@@ -1,20 +1,19 @@
-const { Router } = require("express")
-const fs = require("fs")
+const { Router } = require("express");
+const fs = require("fs");
+const path = require('path');
 
 const router = Router()
 let products = []
 
-const exportProductsToJSON = (fileName) => {
+const exportProductsJSON = () => {
     const productsJSON = JSON.stringify(products)
-    const filePath= 'products.json'
-    fs.truncate(filePath, 0, () => {
-        fs.writeFile(filePath, productsJSON, (err) => {
-            if (err) {
-                throw new Error (`error writing file ${err}`)
-            } else {
-                console.log(`Products have been successfully added to the file ${fileName}`)
-            }
-        })
+    const filePath = path.join(__dirname, '../data/products.json')
+    fs.writeFile(filePath, productsJSON, (err) => {
+        if (err) {
+            return res.status(500).send(err)
+        } else {
+            console.log(`The file has been updated`)
+        }
     })
 }
 
@@ -62,7 +61,7 @@ router.post('/', (req, res) => {
     console.log(newProduct)
     res.send({status: "success"})
     console.log('Product successfully added')
-    exportProductsToJSON('products.json')
+    exportProductsToJSON('../data/products.json')
 })
 
 router.put('/:pid', (req, res) => {
@@ -80,14 +79,8 @@ router.put('/:pid', (req, res) => {
     product.category = req.body.category || product.category;
     product.thumbnails = req.body.thumbnails || product.thumbnails;
 
-    const productsJSON = JSON.stringify(products)
-    fs.writeFile('products.json', productsJSON, (err) => {
-        if (err) {
-            return res.status(500).send({ error: `error writing file ${err}`})
-        } else {
-            return res.status(200).json({ status: "success", message: "Product upgraded" })
-        }
-    })
+    exportProductsJSON('../data/products.json')
+    return res.send({message: "The file has been updated"})
 });
 
 router.delete('/:pid', (req, res) => {
@@ -99,14 +92,10 @@ router.delete('/:pid', (req, res) => {
     
     products = products.filter(product => product.id != parseInt(req.params.pid));
 
-    const productsJSON = JSON.stringify(products)
-    fs.writeFile('products.json', productsJSON, (err) => {
-        if (err) {
-            return res.status(500).send({ error: `Error writing file ${err}`})
-        } else {
-            return res.status(200).send({ status: "success", message: "Product deleted" })
-        }
-    })
+    res.status(200).send({ status: "success", message: "Product deleted" });
+
+    exportProductsJSON('../data/products.json')
+    return res.send({message: "The file has been updated"})
 })
 
 module.exports = router

@@ -6,12 +6,20 @@
   "name": "prentrega",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node src/app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "��#\u0000 \u0000p\u0000r\u0000o\u0000j\u0000e\u0000c\u0000t\u0000B\u0000E\u0000-\u0000R\u0000o\u0000d\u0000r\u0000i\u0000g\u0000u\u0000e\u0000z\u0000\r\u0000 \u0000",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JohanRL/projectBE-Rodriguez.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JohanRL/projectBE-Rodriguez/issues"
+  },
+  "homepage": "https://github.com/JohanRL/projectBE-Rodriguez#readme"
 }
