@@ -79,4 +79,13 @@ router.delete(`/${path}/:id`, async (req, res) => {
     }
 })
 
+router.delete('/', async (req, res) => {
+
+    const id = req.body.id
+
+    const msg = await productsManager.deleteProduct(id)
+    
+    res.render('realTimeProducts')
+})
+
 module.exports = router
